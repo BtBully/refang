@@ -19,26 +19,6 @@ def refang(chars):
         if short_rs == []:
             results = [first] + long_rs
         return results
-        
-    def filter_search():
-        
-        def get_last_entries():
-            if s:
-                last_entry_pos = len(s) % 3
-                last_entry = s[-1]
-                return last_entry, last_entry_pos
-            else:
-                return False, False
-            
-        def check_last_entry():
-            last_entry, last_entry_pos = get_last_entries()
-            if last_entry:       
-                max_entry = pos_dict[last_entry_pos]
-                if int(last_entry) > max_entry:
-                    return False
-            return True
-            
-        return check_last_entry()
             
     def process_chars():
         for i in range(char_length):
@@ -51,14 +31,31 @@ def refang(chars):
             r = results[i]
             new_result = r[:3] + '.' + r[3:6] + '.' + r[6:9] + '.' + r[9:12]
             results[i] = new_result
+            
+    def remove_duplicates():
+        new_results = list(dict.fromkeys(results))
+        return new_results
     
-    pos_dict = {1:2, 2:5, 0:5}
+    def filter_results():
+        new_results = []
+        for entry in results:
+            if (
+                    int(entry[ :3]) <= 255
+                and int(entry[3:6]) <= 255
+                and int(entry[6:9]) <= 255
+                and int(entry[9: ]) <= 255
+               ):
+                    new_results.append(entry)
+        return new_results
+                
+    
     ip_length = 12
-    s = []
     digits = []
     char_length = len(chars)
     process_chars()
     results = process_digits(ip_length, digits)
+    results = remove_duplicates()
+    results = filter_results()
     add_periods()
     return results
     
