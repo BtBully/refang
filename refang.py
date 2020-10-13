@@ -12,12 +12,14 @@ def refang(chars):
         
         def check_entry(new_entry):
             
-            def check_pos_dict():
-                last_entry_pos = len(s) % 3
-                entry_pos = last_entry_pos + 1
-                max_entry = pos_dict[entry_pos]
-                if int(new_entry) > max_entry:
-                    return False
+            def check_group_max():
+                groups = len(s) // 3
+                beg_group = groups * 3 
+                group = ''.join(s[beg_group:])
+                new_group= group + new_entry
+                for max_group in group_max:
+                    if int(new_group) > max_group:
+                        return False
                 return True
             
             def check_memo():
@@ -26,7 +28,7 @@ def refang(chars):
                     return False
                 return True
         
-            return (check_pos_dict() and check_memo())
+            return (check_group_max() and check_memo())
         
         def record_memo(new_entry):
             result_pos = len(s)-1
@@ -67,7 +69,7 @@ def refang(chars):
             results[i] = new_result
             
             
-    pos_dict = {1:2, 2:5, 3:5}
+    group_max = [255]
     ip_length = 12
     s = []
     results = []
