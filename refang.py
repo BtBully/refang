@@ -63,4 +63,4 @@ def refang(chars):
     return results
     
     
-results = refang('25wef5..wef.255wefwe25wef.123645126')
+results = refang('25wef5..wef.255wefwe25wef.12553645126')
