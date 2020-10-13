@@ -7,19 +7,18 @@ Created on Tue Oct  6 14:59:41 2020
 
 def refang(chars):
     
-    def process_digits(pos):
-        if not filter_search():
-            return
-        if len(s) == ip_length:
-            result_str = ''.join(s)
-            results.append(result_str)
-            return
-        if pos >= dig_length:
-            return
-        s.append(digits[pos])
-        process_digits(pos+1)
-        s.pop()
-        process_digits(pos+1)
+    def process_digits(length, digits):
+        if length == 0:
+            return []
+        if length > len(digits):
+            return []
+        first = digits[0]
+        short_rs = process_digits(length-1, digits[1:])
+        long_rs = process_digits(length, digits[1:])
+        results = [first + short for short in short_rs] + long_rs
+        if short_rs == []:
+            results = [first] + long_rs
+        return results
         
     def filter_search():
         
@@ -56,12 +55,10 @@ def refang(chars):
     pos_dict = {1:2, 2:5, 0:5}
     ip_length = 12
     s = []
-    results = []
     digits = []
     char_length = len(chars)
     process_chars()
-    dig_length = len(digits)
-    process_digits(0)
+    results = process_digits(ip_length, digits)
     add_periods()
     return results
     
